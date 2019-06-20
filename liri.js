@@ -17,6 +17,11 @@ function ConcertThis() {
             default: "Glitch Mob"
         }
     ]).then(function (response) {
+        fs.appendFile("log.txt", "," + response.artist + "\n", function (err) {
+            if (err) {
+                console.log(err)
+            }
+        });
         axios.get("https://rest.bandsintown.com/artists/" + response.artist + "/events?app_id=codingbootcamp")
             .then(function (response) {
                 // console.log(response.data);
@@ -71,6 +76,11 @@ function SpotifyThisSong() {
             default: "The Sign"
         }
     ]).then(function (response) {
+        fs.appendFile("log.txt", "," + response.track + "\n", function (err) {
+            if (err) {
+                console.log(err)
+            }
+        });
         spotify.search({ type: 'track', query: response.track, market: 'US', limit: 1 }, function (err, data) {
             if (err) {
                 return console.log('Error occurred: ' + err);
@@ -99,6 +109,11 @@ function MovieThis() {
             default: "Mr. Nobody"
         }
     ]).then(function (response) {
+        fs.appendFile("log.txt", "," + response.movie + "\n", function (err) {
+            if (err) {
+                console.log(err)
+            }
+        });
         axios.get("http://www.omdbapi.com/?t=" + response.movie + "&y=&plot=short&apikey=trilogy").then(
             function (response) {
                 // console.log(response.data);
@@ -130,7 +145,7 @@ function MovieThis() {
 }
 
 function DoWhatItSays() {
-    fs.readFile("random.txt", "utf8", function(err, data) {
+    fs.readFile("random.txt", "utf8", function (err, data) {
         if (err) {
             return console.log(err);
         }
@@ -140,49 +155,49 @@ function DoWhatItSays() {
         console.log(doThis);
         if (doThis[0] === "concert-this") {
             axios.get("https://rest.bandsintown.com/artists/" + doThis[1] + "/events?app_id=codingbootcamp")
-            .then(function (response) {
-                // console.log(response.data);
-                if (response.data) {
-                    for (var i = 0; i < response.data.length; i++) {
-                        if (response.data[i].venue.name) {
-                            console.log("Name of the venue: " + response.data[i].venue.name);
+                .then(function (response) {
+                    // console.log(response.data);
+                    if (response.data) {
+                        for (var i = 0; i < response.data.length; i++) {
+                            if (response.data[i].venue.name) {
+                                console.log("Name of the venue: " + response.data[i].venue.name);
+                            }
+                            var str = "";
+                            if (response.data[i].venue.city) {
+                                str = str + "Venue location: " + response.data[i].venue.city;
+                            }
+                            if (response.data[i].venue.region) {
+                                str += ", " + response.data[i].venue.region;
+                            }
+                            if (response.data[i].venue.country) {
+                                str += ", " + response.data[i].venue.country;
+                            }
+                            console.log(str + "\nDate of the Event: " + moment(response.data[i].datetime).format('LLL'));
                         }
-                        var str = "";
-                        if (response.data[i].venue.city) {
-                            str = str + "Venue location: " + response.data[i].venue.city;
-                        }
-                        if (response.data[i].venue.region) {
-                            str += ", " + response.data[i].venue.region;
-                        }
-                        if (response.data[i].venue.country) {
-                            str += ", " + response.data[i].venue.country;
-                        }
-                        console.log(str + "\nDate of the Event: " + moment(response.data[i].datetime).format('LLL'));
+                        Continue();
                     }
+                    if (response.data.length < 1) {
+                        console.log("Rrrrrgh...this isn't working! There are no upcoming concerts for " + response.artist + ".");
+                        Continue();
+                    }
+                }).catch(function (error) {
+                    if (error.response) {
+                        console.log("---------------Data---------------");
+                        console.log(error.response.data);
+                        console.log("---------------Status---------------");
+                        console.log(error.response.status);
+                        console.log("---------------Status---------------");
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        console.log(error.request);
+                    } else {
+                        console.log("Error", error.message);
+                    }
+                    console.log(error.config);
                     Continue();
-                }
-                if (response.data.length < 1) {
-                    console.log("Rrrrrgh...this isn't working! There are no upcoming concerts for " + response.artist + ".");
-                    Continue();
-                }
-            }).catch(function (error) {
-                if (error.response) {
-                    console.log("---------------Data---------------");
-                    console.log(error.response.data);
-                    console.log("---------------Status---------------");
-                    console.log(error.response.status);
-                    console.log("---------------Status---------------");
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log("Error", error.message);
-                }
-                console.log(error.config);
-                Continue();
-            });
+                });
         }
-        if (doThis[0] === "spotify-this-song"){
+        if (doThis[0] === "spotify-this-song") {
             spotify.search({ type: 'track', query: doThis[1], market: 'US', limit: 1 }, function (err, data) {
                 if (err) {
                     return console.log('Error occurred: ' + err);
@@ -200,40 +215,40 @@ function DoWhatItSays() {
                 Continue();
             });
         }
-        if (doThis[0] === "movie-this"){
+        if (doThis[0] === "movie-this") {
             axios.get("http://www.omdbapi.com/?t=" + doThis[1] + "&y=&plot=short&apikey=trilogy").then(
-            function (response) {
-                // console.log(response.data);
-                console.log("Title: " + response.data.Title);
-                console.log("Year Released: " + response.data.Year);
-                console.log("IMBD Rating: " + response.data.Ratings[1].Value);
-                console.log("Country(s) where move was produced: " + response.data.Country);
-                console.log("Language(s): " + response.data.Language);
-                console.log("Plot: " + response.data.Plot);
-                console.log("Actors: " + response.data.Actors);
-                Continue();
-            }).catch(function (error) {
-                if (error.response) {
-                    console.log("---------------Data---------------");
-                    console.log(error.response.data);
-                    console.log("---------------Status---------------");
-                    console.log(error.response.status);
-                    console.log("---------------Status---------------");
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    console.log(error.request);
-                } else {
-                    console.log("Error", error.message);
-                }
-                console.log(error.config);
-                Continue();
-            });
+                function (response) {
+                    // console.log(response.data);
+                    console.log("Title: " + response.data.Title);
+                    console.log("Year Released: " + response.data.Year);
+                    console.log("IMBD Rating: " + response.data.Ratings[1].Value);
+                    console.log("Country(s) where move was produced: " + response.data.Country);
+                    console.log("Language(s): " + response.data.Language);
+                    console.log("Plot: " + response.data.Plot);
+                    console.log("Actors: " + response.data.Actors);
+                    Continue();
+                }).catch(function (error) {
+                    if (error.response) {
+                        console.log("---------------Data---------------");
+                        console.log(error.response.data);
+                        console.log("---------------Status---------------");
+                        console.log(error.response.status);
+                        console.log("---------------Status---------------");
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        console.log(error.request);
+                    } else {
+                        console.log("Error", error.message);
+                    }
+                    console.log(error.config);
+                    Continue();
+                });
         }
     })
 }
 
 function Ascii() {
-    fs.readFile("vault.txt", "utf8", function(err, data) {
+    fs.readFile("vault.txt", "utf8", function (err, data) {
         if (err) {
             return console.log(err);
         }
@@ -251,6 +266,11 @@ function Continue() {
             default: true
         }
     ]).then(function (response) {
+        fs.appendFile("log.txt", "Restart: " + response.continue + "\n", function (err) {
+            if (err) {
+                console.log(err)
+            }
+        });
         if (response.continue) {
             QuestionTheUser();
         }
@@ -270,6 +290,20 @@ function QuestionTheUser() {
             default: "concert-this"
         }
     ]).then(function (response) {
+        if (response.userChoice === "do-what-it-says" ||response.userChoice === "ASCII") {
+            fs.appendFile("log.txt", response.userChoice + "\n", function (err) {
+                if (err) {
+                    console.log(err)
+                }
+            });
+        }
+        else {
+            fs.appendFile("log.txt", response.userChoice, function (err) {
+                if (err) {
+                    console.log(err)
+                }
+            });
+        }
         if (response.userChoice === "concert-this") {
             ConcertThis();
         }
