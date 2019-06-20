@@ -71,7 +71,7 @@ function SpotifyThisSong() {
         {
             type: "input",
             name: "track",
-            message: "Hey, check me out everybody! I'm dancin', I'm dancin'! Type in a song name!",
+            message: "Hey, check me out everybody! I'm dancin', I'm dancin'! Type in a song name:",
             default: "The Sign"
         }
     ]).then(function (response) {
@@ -86,11 +86,50 @@ function SpotifyThisSong() {
             if (data.tracks.items[0].preview_url !== null) {
                 console.log("Preview URL: " + JSON.stringify(data.tracks.items[0].preview_url))
             }
-            else{
+            else {
                 console.log("I'm detecting a motor unit malfunction... I can't move! I'm paralyzed with fear! \nPreview URL is unfortunately not found!");
             }
             Continue();
         });
+    })
+}
+
+function MovieThis() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "movie",
+            message: "I don't like this... this is making me nervous. Take a deep breath- I can't breathe! \nThis is just a recording of someone breathing! It's not real! It's just making me more nervous! \nType a movie name to search:",
+            default: "Mr. Nobody"
+        }
+    ]).then(function (response) {
+        axios.get("http://www.omdbapi.com/?t=" + response.movie + "&y=&plot=short&apikey=trilogy").then(
+            function (response) {
+                // console.log(response.data);
+                console.log("Title: " + response.data.Title);
+                console.log("Year Released: " + response.data.Year);
+                console.log("IMBD Rating: " + response.data.Ratings[1].Value);
+                console.log("Country(s) where move was produced: " + response.data.Country);
+                console.log("Language(s): " + response.data.Language);
+                console.log("Plot: " + response.data.Plot);
+                console.log("Actors: " + response.data.Actors);
+                Continue();
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log("---------------Data---------------");
+                    console.log(error.response.data);
+                    console.log("---------------Status---------------");
+                    console.log(error.response.status);
+                    console.log("---------------Status---------------");
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log("Error", error.message);
+                }
+                console.log(error.config);
+                Continue();
+            });
     })
 }
 
@@ -127,6 +166,9 @@ function QuestionTheUser() {
         }
         else if (response.userChoice === "spotify-this-song") {
             SpotifyThisSong();
+        }
+        else if (response.userChoice === "movie-this") {
+            MovieThis();
         }
     });
 }
