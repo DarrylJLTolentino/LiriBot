@@ -45,8 +45,6 @@ function ConcertThis() {
                 }
             }).catch(function (error) {
                 if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
                     console.log("---------------Data---------------");
                     console.log(error.response.data);
                     console.log("---------------Status---------------");
@@ -54,11 +52,8 @@ function ConcertThis() {
                     console.log("---------------Status---------------");
                     console.log(error.response.headers);
                 } else if (error.request) {
-                    // The request was made but no response was received
-                    // `error.request` is an object that comes back with details pertaining to the error that occurred.
                     console.log(error.request);
                 } else {
-                    // Something happened in setting up the request that triggered an Error
                     console.log("Error", error.message);
                 }
                 console.log(error.config);
@@ -100,7 +95,7 @@ function MovieThis() {
         {
             type: "input",
             name: "movie",
-            message: "I don't like this... this is making me nervous. Take a deep breath- I can't breathe! \nThis is just a recording of someone breathing! It's not real! It's just making me more nervous! \nType a movie name to search:",
+            message: "This is just a recording of someone breathing! It's not real! It's just making me more nervous! \nType a movie name to search:",
             default: "Mr. Nobody"
         }
     ]).then(function (response) {
@@ -237,12 +232,22 @@ function DoWhatItSays() {
     })
 }
 
+function Ascii() {
+    fs.readFile("vault.txt", "utf8", function(err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        console.log("I'll lead the way!", data, "Did you find the Vault yet, Traveller?")
+        Continue();
+    })
+}
+
 function Continue() {
     inquirer.prompt([
         {
             type: "confirm",
             name: "continue",
-            message: "Would you like to continue traveller?",
+            message: "Would you like to continue, Traveller?",
             default: true
         }
     ]).then(function (response) {
@@ -260,8 +265,8 @@ function QuestionTheUser() {
         {
             type: "list",
             name: "userChoice",
-            message: "Greetings Traveller! What would you like to do?",
-            choices: ["concert-this", "spotify-this-song", "movie-this", "do-what-it-says"],
+            message: "Greetings, Traveller! What would you like to do?",
+            choices: ["concert-this", "spotify-this-song", "movie-this", "do-what-it-says", "ASCII"],
             default: "concert-this"
         }
     ]).then(function (response) {
@@ -274,8 +279,11 @@ function QuestionTheUser() {
         else if (response.userChoice === "movie-this") {
             MovieThis();
         }
-        else {
+        else if (response.userChoice === "do-what-it-says") {
             DoWhatItSays();
+        }
+        else {
+            Ascii();
         }
     });
 }
