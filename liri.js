@@ -3,8 +3,9 @@ var inquirer = require("inquirer");
 var axios = require("axios");
 var moment = require('moment');
 var keys = require("./keys.js");
+var Spotify = require("node-spotify-api");
 
-// var spotify = new Spotify(keys.spotify);
+var spotify = new Spotify(keys.spotify);
 
 function ConcertThis() {
     inquirer.prompt([
@@ -65,7 +66,33 @@ function ConcertThis() {
     });
 }
 
-
+function SpotifyThisSong() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "track",
+            message: "Hey, check me out everybody! I'm dancin', I'm dancin'! Type in a song name!",
+            default: "The Sign"
+        }
+    ]).then(function (response) {
+        spotify.search({ type: 'track', query: response.track, market: 'US', limit: 1 }, function (err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
+            console.log(JSON.stringify(data, null, 4));
+            console.log("Artist: " + JSON.stringify(data.tracks.items[0].album.artists[0].name));
+            console.log("Track Name: " + JSON.stringify(data.tracks.items[0].name));
+            console.log("Album Name: " + JSON.stringify(data.tracks.items[0].album.name));
+            if (data.tracks.items[0].preview_url !== null) {
+                console.log("Preview URL: " + JSON.stringify(data.tracks.items[0].preview_url))
+            }
+            else{
+                console.log("I'm detecting a motor unit malfunction... I can't move! I'm paralyzed with fear! \nPreview URL is unfortunately not found!");
+            }
+            Continue();
+        });
+    })
+}
 
 function Continue() {
     inquirer.prompt([
@@ -97,6 +124,9 @@ function QuestionTheUser() {
     ]).then(function (response) {
         if (response.userChoice === "concert-this") {
             ConcertThis();
+        }
+        else if (response.userChoice === "spotify-this-song") {
+            SpotifyThisSong();
         }
     });
 }
