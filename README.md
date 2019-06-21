@@ -1,5 +1,7 @@
 # LiriBot
 
+### [Link to my Github repo](https://github.com/DarrylJLTolentino/LiriBot)
+
 ![](media/log-txt-empty.gif)
 
 ![](media/concert-this.gif)
@@ -15,3 +17,4 @@
 ![](media/exit-node-program.gif)
 
 ![](media/log-txt-after.gif)
+
