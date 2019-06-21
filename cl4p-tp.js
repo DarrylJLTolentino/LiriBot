@@ -145,7 +145,7 @@ function MovieThis() {
                 dataStr = dataStr + "Title: " + response.data.Title;
                 dataStr += "\nYear Released: " + response.data.Year;
                 dataStr += "\nIMDb Rating: " + response.data.Ratings[1].Value;
-                dataStr += "\nCountry(s) where move was produced: " + response.data.Country;
+                dataStr += "\nCountry(s) where movie was produced: " + response.data.Country;
                 dataStr += "\nLanguage(s): " + response.data.Language;
                 dataStr += "\nPlot: " + response.data.Plot;
                 dataStr += "\nActors: " + response.data.Actors;
@@ -312,7 +312,7 @@ function DoWhatItSays() {
                     dataStr = dataStr + "Title: " + response.data.Title;
                     dataStr += "\nYear Released: " + response.data.Year;
                     dataStr += "\nIMDb Rating: " + response.data.Ratings[1].Value;
-                    dataStr += "\nCountry(s) where move was produced: " + response.data.Country;
+                    dataStr += "\nCountry(s) where movie was produced: " + response.data.Country;
                     dataStr += "\nLanguage(s): " + response.data.Language;
                     dataStr += "\nPlot: " + response.data.Plot;
                     dataStr += "\nActors: " + response.data.Actors;
