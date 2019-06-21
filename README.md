@@ -44,3 +44,5 @@ This gif demonstrates how to exit out of the node program after the user is fini
 
 This gif demonstrates that the "log.txt" file is completely filled with all the outputs from the concert-this, spotify-this-song, movie-this, and do-what-it-says commands after running the program.
 
+This program was created with Node.JS, NPM, Axios, MomentJS, fs, inquirer, Spotify API, BandsInTown API, and the OMDB API.
+
