@@ -1,0 +1,64 @@
+Venue location: Long Beach, CA, United States
+Date of the Event: August 17, 2019 5:00 PM
+Venue location: Charlotte, NC, United States
+Date of the Event: September 4, 2019 5:30 PM
+Venue location: Norfolk, VA, United States
+Date of the Event: September 6, 2019 5:00 PM
+Venue location: Pittsburgh, PA, United States
+Date of the Event: September 5, 2019 5:00 PM
+Venue location: Indianapolis, IN, United States
+Date of the Event: September 11, 2019 6:30 PM
+Venue location: Raleigh, NC, United States
+Date of the Event: September 17, 2019 5:00 PM
+Venue location: Cleveland, OH, United States
+Date of the Event: September 15, 2019 5:30 PM
+Venue location: Portland, ME, United States
+Date of the Event: September 20, 2019 5:30 PM
+Venue location: Minneapolis, MN, United States
+Date of the Event: September 13, 2019 7:30 PM
+Venue location: Hartford, CT, United States
+Date of the Event: September 21, 2019 5:30 PM
+Venue location: Irving, TX, United States
+Date of the Event: September 25, 2019 5:30 PM
+Venue location: Austin, TX, United States
+Date of the Event: September 26, 2019 5:30 PM
+Venue location: Austin, TX, United States
+Date of the Event: September 27, 2019 6:30 PM
+Venue location: Lowell, MA, United States
+Date of the Event: September 19, 2019 5:30 PM
+Venue location: Houston, TX, United States
+Date of the Event: September 28, 2019 5:30 PM
+Venue location: Sacramento, CA, United States
+Date of the Event: October 3, 2019 5:00 PM
+Venue location: San Francisco, CA, United States
+Date of the Event: October 11, 2019 5:30 PM
+Venue location: San Diego, CA, United States
+Date of the Event: October 12, 2019 5:30 PM
+Venue location: George, WA, United States
+Date of the Event: October 5, 2019 7:00 PM
+Venue location: Phoenix, AZ, United States
+Date of the Event: October 13, 2019 5:30 PM
+Venue location: New Orleans, LA, United States
+Date of the Event: October 25, 2019 12:00 PM
+Artist: "Virtual Self"
+Track Name: "Particle Arts"
+Album Name: "Virtual Self"
+Preview URL: "https://p.scdn.co/mp3-preview/1d248ba9492a7a5dc88dd8883af430c7f846cdd4?cid=7fea5ac0c03844d9b70bebeed23d0aac"
+Title: Mr. Nobody
+Year Released: 2009
+IMBD Rating: 67%
+Country(s) where move was produced: Belgium, Germany, Canada, France, USA, UK
+Language(s): English, Mohawk
+Plot: A boy stands on a station platform as a train is about to leave. Should he go with his mother or stay with his father? Infinite possibilities arise from this decision. As long as he doesn't choose, anything is possible.
+Actors: Jared Leto, Sarah Polley, Diane Kruger, Linh Dan Pham
+Artist: "Backstreet Boys"
+Track Name: "I Want It That Way"
+Album Name: "The Hits--Chapter One"
+Preview URL: "https://p.scdn.co/mp3-preview/e72a05dc3f69c891e3390c3ceaa77fad02f6b5f6?cid=7fea5ac0c03844d9b70bebeed23d0aac"
+Title: Avengers: Endgame
+Year Released: 2019
+IMBD Rating: 94%
+Country(s) where move was produced: USA
+Language(s): English, Japanese, Xhosa
+Plot: After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to undo Thanos' actions and restore order to the universe.
+Actors: Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth
