@@ -81,20 +81,31 @@ function SpotifyThisSong() {
                 console.log(err)
             }
         });
-        spotify.search({ type: 'track', query: response.track, market: 'US', limit: 1 }, function (err, data) {
+        spotify.search({ type: 'track', query: response.track, market: 'US', limit: 5 }, function (err, data) {
             if (err) {
                 return console.log('Error occurred: ' + err);
             }
             // console.log(JSON.stringify(data, null, 4));
-            console.log("Artist: " + JSON.stringify(data.tracks.items[0].album.artists[0].name));
-            console.log("Track Name: " + JSON.stringify(data.tracks.items[0].name));
-            console.log("Album Name: " + JSON.stringify(data.tracks.items[0].album.name));
-            if (data.tracks.items[0].preview_url !== null) {
-                console.log("Preview URL: " + JSON.stringify(data.tracks.items[0].preview_url))
+            for (var i = 0; i < data.tracks.items.length; i++) {
+                console.log("Artist: " + JSON.stringify(data.tracks.items[i].album.artists[0].name));
+                console.log("Track Name: " + JSON.stringify(data.tracks.items[i].name));
+                console.log("Album Name: " + JSON.stringify(data.tracks.items[i].album.name));
+                if (data.tracks.items[i].preview_url !== null) {
+                    console.log("Preview URL: " + JSON.stringify(data.tracks.items[i].preview_url))
+                }
+                else {
+                    console.log("I'm detecting a motor unit malfunction... I can't move! I'm paralyzed with fear! \nPreview URL is unfortunately not found!");
+                }
             }
-            else {
-                console.log("I'm detecting a motor unit malfunction... I can't move! I'm paralyzed with fear! \nPreview URL is unfortunately not found!");
-            }
+            // console.log("Artist: " + JSON.stringify(data.tracks.items[0].album.artists[0].name));
+            // console.log("Track Name: " + JSON.stringify(data.tracks.items[0].name));
+            // console.log("Album Name: " + JSON.stringify(data.tracks.items[0].album.name));
+            // if (data.tracks.items[0].preview_url !== null) {
+            //     console.log("Preview URL: " + JSON.stringify(data.tracks.items[0].preview_url))
+            // }
+            // else {
+            //     console.log("I'm detecting a motor unit malfunction... I can't move! I'm paralyzed with fear! \nPreview URL is unfortunately not found!");
+            // }
             Continue();
         });
     })
@@ -198,20 +209,31 @@ function DoWhatItSays() {
                 });
         }
         if (doThis[0] === "spotify-this-song") {
-            spotify.search({ type: 'track', query: doThis[1], market: 'US', limit: 1 }, function (err, data) {
+            spotify.search({ type: 'track', query: doThis[1], market: 'US', limit: 5 }, function (err, data) {
                 if (err) {
                     return console.log('Error occurred: ' + err);
                 }
                 // console.log(JSON.stringify(data, null, 4));
-                console.log("Artist: " + JSON.stringify(data.tracks.items[0].album.artists[0].name));
-                console.log("Track Name: " + JSON.stringify(data.tracks.items[0].name));
-                console.log("Album Name: " + JSON.stringify(data.tracks.items[0].album.name));
-                if (data.tracks.items[0].preview_url !== null) {
-                    console.log("Preview URL: " + JSON.stringify(data.tracks.items[0].preview_url))
+                for (var i = 0; i < data.tracks.items.length; i++) {
+                    console.log("Artist: " + JSON.stringify(data.tracks.items[i].album.artists[0].name));
+                    console.log("Track Name: " + JSON.stringify(data.tracks.items[i].name));
+                    console.log("Album Name: " + JSON.stringify(data.tracks.items[i].album.name));
+                    if (data.tracks.items[i].preview_url !== null) {
+                        console.log("Preview URL: " + JSON.stringify(data.tracks.items[i].preview_url))
+                    }
+                    else {
+                        console.log("I'm detecting a motor unit malfunction... I can't move! I'm paralyzed with fear! \nPreview URL is unfortunately not found!");
+                    }
                 }
-                else {
-                    console.log("I'm detecting a motor unit malfunction... I can't move! I'm paralyzed with fear! \nPreview URL is unfortunately not found!");
-                }
+                // console.log("Artist: " + JSON.stringify(data.tracks.items[0].album.artists[0].name));
+                // console.log("Track Name: " + JSON.stringify(data.tracks.items[0].name));
+                // console.log("Album Name: " + JSON.stringify(data.tracks.items[0].album.name));
+                // if (data.tracks.items[0].preview_url !== null) {
+                //     console.log("Preview URL: " + JSON.stringify(data.tracks.items[0].preview_url))
+                // }
+                // else {
+                //     console.log("I'm detecting a motor unit malfunction... I can't move! I'm paralyzed with fear! \nPreview URL is unfortunately not found!");
+                // }
                 Continue();
             });
         }
@@ -290,7 +312,7 @@ function QuestionTheUser() {
             default: "concert-this"
         }
     ]).then(function (response) {
-        if (response.userChoice === "do-what-it-says" ||response.userChoice === "ASCII") {
+        if (response.userChoice === "do-what-it-says" || response.userChoice === "ASCII") {
             fs.appendFile("log.txt", response.userChoice + "\n", function (err) {
                 if (err) {
                     console.log(err)
