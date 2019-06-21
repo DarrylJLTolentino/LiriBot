@@ -46,3 +46,16 @@ This gif demonstrates that the "log.txt" file is completely filled with all the 
 
 This program was created with Node.JS, NPM, Axios, MomentJS, fs, inquirer, Spotify API, BandsInTown API, and the OMDB API.
 
+######
+
+| Technology Used | Reference |
+| --------------- | --------- |
+| JavaScript | https://www.javascript.com/ |
+| NodeJs | https://nodejs.org/en/ |
+| Axios | https://www.npmjs.com/package/axios |
+| MomentJs | http://momentjs.com/ |
+| fs | https://nodejs.org/api/fs.html |
+| inquirer | https://www.npmjs.com/package/inquirer |
+| Spotify API | https://developer.spotify.com/documentation/web-api/ |
+| BandsInTown API | https://manager.bandsintown.com/support/bandsintown-api |
+| OMDB API | http://www.omdbapi.com/ |
