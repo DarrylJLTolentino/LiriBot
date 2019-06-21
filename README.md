@@ -59,3 +59,17 @@ This program was created with Node.JS, NPM, Axios, MomentJS, fs, inquirer, Spoti
 | Spotify API | https://developer.spotify.com/documentation/web-api/ |
 | BandsInTown API | https://manager.bandsintown.com/support/bandsintown-api |
 | OMDB API | http://www.omdbapi.com/ |
+
+######
+
+| Versioning | Reference |
+| --------------- | --------- |
+| Github | https://github.com/ |
+
+######
+
+## Author
+- Darryl Tolentino
+
+## Acknowledgements
+Jake Dudum - For helping me fix syntax
