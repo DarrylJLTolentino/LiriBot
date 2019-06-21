@@ -17,11 +17,6 @@ function ConcertThis() {
             default: "Glitch Mob"
         }
     ]).then(function (response) {
-        fs.appendFile("log.txt", "," + response.artist + "\n", function (err) {
-            if (err) {
-                console.log(err)
-            }
-        });
         axios.get("https://rest.bandsintown.com/artists/" + response.artist + "/events?app_id=codingbootcamp")
             .then(function (response) {
                 // console.log(response.data);
@@ -41,11 +36,21 @@ function ConcertThis() {
                             str += ", " + response.data[i].venue.country;
                         }
                         console.log(str + "\nDate of the Event: " + moment(response.data[i].datetime).format('LLL'));
+                        fs.appendFile("log.txt", str + "\nDate of the Event: " + moment(response.data[i].datetime).format('LLL') + "\n", function (err) {
+                            if (err) {
+                                console.log(err)
+                            }
+                        });
                     }
                     Continue();
                 }
                 if (response.data.length < 1) {
                     console.log("Rrrrrgh...this isn't working! There are no upcoming concerts for " + response.artist + ".");
+                    fs.appendFile("Rrrrrgh...this isn't working! There are no upcoming concerts for " + response.artist + ".\n", function (err) {
+                        if (err) {
+                            console.log(err)
+                        }
+                    });
                     Continue();
                 }
             }).catch(function (error) {
@@ -56,12 +61,32 @@ function ConcertThis() {
                     console.log(error.response.status);
                     console.log("---------------Status---------------");
                     console.log(error.response.headers);
+                    fs.appendFile("log.txt", error.response.data + "\n" + error.response.status + "\n" + error.response.headers + "\n", function (err) {
+                        if (err) {
+                            console.log(err)
+                        }
+                    });
                 } else if (error.request) {
                     console.log(error.request);
+                    fs.appendFile("log.txt", error.request + "\n", function (err) {
+                        if (err) {
+                            console.log(err)
+                        }
+                    });
                 } else {
                     console.log("Error", error.message);
+                    fs.appendFile("log.txt", error.message + "\n", function (err) {
+                        if (err) {
+                            console.log(err)
+                        }
+                    });
                 }
                 console.log(error.config);
+                fs.appendFile("log.txt", error.config + "\n", function (err) {
+                    if (err) {
+                        console.log(err)
+                    }
+                });
                 Continue();
             });
     });
@@ -76,36 +101,29 @@ function SpotifyThisSong() {
             default: "The Sign"
         }
     ]).then(function (response) {
-        fs.appendFile("log.txt", "," + response.track + "\n", function (err) {
-            if (err) {
-                console.log(err)
-            }
-        });
-        spotify.search({ type: 'track', query: response.track, market: 'US', limit: 5 }, function (err, data) {
+        spotify.search({ type: 'track', query: response.track, market: 'US', limit: 1 }, function (err, data) {
             if (err) {
                 return console.log('Error occurred: ' + err);
             }
+            var dataStr = "";
             // console.log(JSON.stringify(data, null, 4));
             for (var i = 0; i < data.tracks.items.length; i++) {
-                console.log("Artist: " + JSON.stringify(data.tracks.items[i].album.artists[0].name));
-                console.log("Track Name: " + JSON.stringify(data.tracks.items[i].name));
-                console.log("Album Name: " + JSON.stringify(data.tracks.items[i].album.name));
+                dataStr = dataStr + "Artist: " + JSON.stringify(data.tracks.items[i].album.artists[0].name);
+                dataStr += "\nTrack Name: " + JSON.stringify(data.tracks.items[i].name);
+                dataStr += "\nAlbum Name: " + JSON.stringify(data.tracks.items[i].album.name);
                 if (data.tracks.items[i].preview_url !== null) {
-                    console.log("Preview URL: " + JSON.stringify(data.tracks.items[i].preview_url))
+                    dataStr += "\nPreview URL: " + JSON.stringify(data.tracks.items[i].preview_url);
                 }
                 else {
-                    console.log("I'm detecting a motor unit malfunction... I can't move! I'm paralyzed with fear! \nPreview URL is unfortunately not found!");
+                    dataStr += "\nI'm detecting a motor unit malfunction... I can't move! I'm paralyzed with fear! \nPreview URL is unfortunately not found!";
                 }
+                console.log(dataStr)
             }
-            // console.log("Artist: " + JSON.stringify(data.tracks.items[0].album.artists[0].name));
-            // console.log("Track Name: " + JSON.stringify(data.tracks.items[0].name));
-            // console.log("Album Name: " + JSON.stringify(data.tracks.items[0].album.name));
-            // if (data.tracks.items[0].preview_url !== null) {
-            //     console.log("Preview URL: " + JSON.stringify(data.tracks.items[0].preview_url))
-            // }
-            // else {
-            //     console.log("I'm detecting a motor unit malfunction... I can't move! I'm paralyzed with fear! \nPreview URL is unfortunately not found!");
-            // }
+            fs.appendFile("log.txt", dataStr + "\n", function (err) {
+                if (err) {
+                    console.log(err)
+                }
+            });
             Continue();
         });
     })
@@ -120,21 +138,23 @@ function MovieThis() {
             default: "Mr. Nobody"
         }
     ]).then(function (response) {
-        fs.appendFile("log.txt", "," + response.movie + "\n", function (err) {
-            if (err) {
-                console.log(err)
-            }
-        });
         axios.get("http://www.omdbapi.com/?t=" + response.movie + "&y=&plot=short&apikey=trilogy").then(
             function (response) {
                 // console.log(response.data);
-                console.log("Title: " + response.data.Title);
-                console.log("Year Released: " + response.data.Year);
-                console.log("IMBD Rating: " + response.data.Ratings[1].Value);
-                console.log("Country(s) where move was produced: " + response.data.Country);
-                console.log("Language(s): " + response.data.Language);
-                console.log("Plot: " + response.data.Plot);
-                console.log("Actors: " + response.data.Actors);
+                var dataStr = "";
+                dataStr = dataStr + "Title: " + response.data.Title;
+                dataStr += "\nYear Released: " + response.data.Year;
+                dataStr += "\nIMBD Rating: " + response.data.Ratings[1].Value;
+                dataStr += "\nCountry(s) where move was produced: " + response.data.Country;
+                dataStr += "\nLanguage(s): " + response.data.Language;
+                dataStr += "\nPlot: " + response.data.Plot;
+                dataStr += "\nActors: " + response.data.Actors;
+                console.log(dataStr);
+                fs.appendFile("log.txt", dataStr + "\n", function (err) {
+                    if (err) {
+                        console.log(err)
+                    }
+                });
                 Continue();
             }).catch(function (error) {
                 if (error.response) {
@@ -144,12 +164,32 @@ function MovieThis() {
                     console.log(error.response.status);
                     console.log("---------------Status---------------");
                     console.log(error.response.headers);
+                    fs.appendFile("log.txt", error.response.data + "\n" + error.response.status + "\n" + error.response.headers + "\n", function (err) {
+                        if (err) {
+                            console.log(err)
+                        }
+                    });
                 } else if (error.request) {
                     console.log(error.request);
+                    fs.appendFile("log.txt", error.request + "\n", function (err) {
+                        if (err) {
+                            console.log(err)
+                        }
+                    });
                 } else {
                     console.log("Error", error.message);
+                    fs.appendFile("log.txt", error.message + "\n", function (err) {
+                        if (err) {
+                            console.log(err)
+                        }
+                    });
                 }
                 console.log(error.config);
+                fs.appendFile("log.txt", error.config + "\n", function (err) {
+                    if (err) {
+                        console.log(err)
+                    }
+                });
                 Continue();
             });
     })
@@ -184,11 +224,21 @@ function DoWhatItSays() {
                                 str += ", " + response.data[i].venue.country;
                             }
                             console.log(str + "\nDate of the Event: " + moment(response.data[i].datetime).format('LLL'));
+                            fs.appendFile("log.txt", str + "\nDate of the Event: " + moment(response.data[i].datetime).format('LLL') + "\n", function (err) {
+                                if (err) {
+                                    console.log(err)
+                                }
+                            });
                         }
                         Continue();
                     }
                     if (response.data.length < 1) {
                         console.log("Rrrrrgh...this isn't working! There are no upcoming concerts for " + response.artist + ".");
+                        fs.appendFile("Rrrrrgh...this isn't working! There are no upcoming concerts for " + response.artist + ".\n", function (err) {
+                            if (err) {
+                                console.log(err)
+                            }
+                        });
                         Continue();
                     }
                 }).catch(function (error) {
@@ -199,55 +249,79 @@ function DoWhatItSays() {
                         console.log(error.response.status);
                         console.log("---------------Status---------------");
                         console.log(error.response.headers);
+                        fs.appendFile("log.txt", error.response.data + "\n" + error.response.status + "\n" + error.response.headers + "\n", function (err) {
+                            if (err) {
+                                console.log(err)
+                            }
+                        });
                     } else if (error.request) {
                         console.log(error.request);
+                        fs.appendFile("log.txt", error.request + "\n", function (err) {
+                            if (err) {
+                                console.log(err)
+                            }
+                        });
                     } else {
                         console.log("Error", error.message);
+                        fs.appendFile("log.txt", error.message + "\n", function (err) {
+                            if (err) {
+                                console.log(err)
+                            }
+                        });
                     }
                     console.log(error.config);
+                    fs.appendFile("log.txt", error.config + "\n", function (err) {
+                        if (err) {
+                            console.log(err)
+                        }
+                    });
                     Continue();
                 });
         }
         if (doThis[0] === "spotify-this-song") {
-            spotify.search({ type: 'track', query: doThis[1], market: 'US', limit: 5 }, function (err, data) {
+            spotify.search({ type: 'track', query: doThis[1], market: 'US', limit: 1 }, function (err, data) {
                 if (err) {
                     return console.log('Error occurred: ' + err);
                 }
+                var dataStr = "";
                 // console.log(JSON.stringify(data, null, 4));
                 for (var i = 0; i < data.tracks.items.length; i++) {
-                    console.log("Artist: " + JSON.stringify(data.tracks.items[i].album.artists[0].name));
-                    console.log("Track Name: " + JSON.stringify(data.tracks.items[i].name));
-                    console.log("Album Name: " + JSON.stringify(data.tracks.items[i].album.name));
+                    dataStr = dataStr + "Artist: " + JSON.stringify(data.tracks.items[i].album.artists[0].name);
+                    dataStr += "\nTrack Name: " + JSON.stringify(data.tracks.items[i].name);
+                    dataStr += "\nAlbum Name: " + JSON.stringify(data.tracks.items[i].album.name);
                     if (data.tracks.items[i].preview_url !== null) {
-                        console.log("Preview URL: " + JSON.stringify(data.tracks.items[i].preview_url))
+                        dataStr += "\nPreview URL: " + JSON.stringify(data.tracks.items[i].preview_url);
                     }
                     else {
-                        console.log("I'm detecting a motor unit malfunction... I can't move! I'm paralyzed with fear! \nPreview URL is unfortunately not found!");
+                        dataStr += "\nI'm detecting a motor unit malfunction... I can't move! I'm paralyzed with fear! \nPreview URL is unfortunately not found!";
                     }
+                    console.log(dataStr)
                 }
-                // console.log("Artist: " + JSON.stringify(data.tracks.items[0].album.artists[0].name));
-                // console.log("Track Name: " + JSON.stringify(data.tracks.items[0].name));
-                // console.log("Album Name: " + JSON.stringify(data.tracks.items[0].album.name));
-                // if (data.tracks.items[0].preview_url !== null) {
-                //     console.log("Preview URL: " + JSON.stringify(data.tracks.items[0].preview_url))
-                // }
-                // else {
-                //     console.log("I'm detecting a motor unit malfunction... I can't move! I'm paralyzed with fear! \nPreview URL is unfortunately not found!");
-                // }
+                fs.appendFile("log.txt", dataStr + "\n", function (err) {
+                    if (err) {
+                        console.log(err)
+                    }
+                });
                 Continue();
             });
         }
         if (doThis[0] === "movie-this") {
             axios.get("http://www.omdbapi.com/?t=" + doThis[1] + "&y=&plot=short&apikey=trilogy").then(
                 function (response) {
-                    // console.log(response.data);
-                    console.log("Title: " + response.data.Title);
-                    console.log("Year Released: " + response.data.Year);
-                    console.log("IMBD Rating: " + response.data.Ratings[1].Value);
-                    console.log("Country(s) where move was produced: " + response.data.Country);
-                    console.log("Language(s): " + response.data.Language);
-                    console.log("Plot: " + response.data.Plot);
-                    console.log("Actors: " + response.data.Actors);
+                    var dataStr = "";
+                    dataStr = dataStr + "Title: " + response.data.Title;
+                    dataStr += "\nYear Released: " + response.data.Year;
+                    dataStr += "\nIMBD Rating: " + response.data.Ratings[1].Value;
+                    dataStr += "\nCountry(s) where move was produced: " + response.data.Country;
+                    dataStr += "\nLanguage(s): " + response.data.Language;
+                    dataStr += "\nPlot: " + response.data.Plot;
+                    dataStr += "\nActors: " + response.data.Actors;
+                    console.log(dataStr);
+                    fs.appendFile("log.txt", dataStr + "\n", function (err) {
+                        if (err) {
+                            console.log(err)
+                        }
+                    });
                     Continue();
                 }).catch(function (error) {
                     if (error.response) {
@@ -257,12 +331,32 @@ function DoWhatItSays() {
                         console.log(error.response.status);
                         console.log("---------------Status---------------");
                         console.log(error.response.headers);
+                        fs.appendFile("log.txt", error.response.data + "\n" + error.response.status + "\n" + error.response.headers + "\n", function (err) {
+                            if (err) {
+                                console.log(err)
+                            }
+                        });
                     } else if (error.request) {
                         console.log(error.request);
+                        fs.appendFile("log.txt", error.request + "\n", function (err) {
+                            if (err) {
+                                console.log(err)
+                            }
+                        });
                     } else {
                         console.log("Error", error.message);
+                        fs.appendFile("log.txt", error.message + "\n", function (err) {
+                            if (err) {
+                                console.log(err)
+                            }
+                        });
                     }
                     console.log(error.config);
+                    fs.appendFile("log.txt", error.config + "\n", function (err) {
+                        if (err) {
+                            console.log(err)
+                        }
+                    });
                     Continue();
                 });
         }
@@ -288,11 +382,6 @@ function Continue() {
             default: true
         }
     ]).then(function (response) {
-        fs.appendFile("log.txt", "Restart: " + response.continue + "\n", function (err) {
-            if (err) {
-                console.log(err)
-            }
-        });
         if (response.continue) {
             QuestionTheUser();
         }
@@ -312,36 +401,22 @@ function QuestionTheUser() {
             default: "concert-this"
         }
     ]).then(function (response) {
-        if (response.userChoice === "do-what-it-says" || response.userChoice === "ASCII") {
-            fs.appendFile("log.txt", response.userChoice + "\n", function (err) {
-                if (err) {
-                    console.log(err)
-                }
-            });
-        }
-        else {
-            fs.appendFile("log.txt", response.userChoice, function (err) {
-                if (err) {
-                    console.log(err)
-                }
-            });
-        }
         if (response.userChoice === "concert-this") {
-            ConcertThis();
-        }
-        else if (response.userChoice === "spotify-this-song") {
-            SpotifyThisSong();
-        }
-        else if (response.userChoice === "movie-this") {
-            MovieThis();
-        }
-        else if (response.userChoice === "do-what-it-says") {
-            DoWhatItSays();
-        }
-        else {
-            Ascii();
-        }
-    });
+        ConcertThis();
+    }
+    else if (response.userChoice === "spotify-this-song") {
+        SpotifyThisSong();
+    }
+    else if (response.userChoice === "movie-this") {
+        MovieThis();
+    }
+    else if (response.userChoice === "do-what-it-says") {
+        DoWhatItSays();
+    }
+    else {
+        Ascii();
+    }
+});
 }
 
 QuestionTheUser();
