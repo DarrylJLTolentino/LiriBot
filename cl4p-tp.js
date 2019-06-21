@@ -144,7 +144,7 @@ function MovieThis() {
                 var dataStr = "";
                 dataStr = dataStr + "Title: " + response.data.Title;
                 dataStr += "\nYear Released: " + response.data.Year;
-                dataStr += "\nIMBD Rating: " + response.data.Ratings[1].Value;
+                dataStr += "\nIMDb Rating: " + response.data.Ratings[1].Value;
                 dataStr += "\nCountry(s) where move was produced: " + response.data.Country;
                 dataStr += "\nLanguage(s): " + response.data.Language;
                 dataStr += "\nPlot: " + response.data.Plot;
@@ -311,7 +311,7 @@ function DoWhatItSays() {
                     var dataStr = "";
                     dataStr = dataStr + "Title: " + response.data.Title;
                     dataStr += "\nYear Released: " + response.data.Year;
-                    dataStr += "\nIMBD Rating: " + response.data.Ratings[1].Value;
+                    dataStr += "\nIMDb Rating: " + response.data.Ratings[1].Value;
                     dataStr += "\nCountry(s) where move was produced: " + response.data.Country;
                     dataStr += "\nLanguage(s): " + response.data.Language;
                     dataStr += "\nPlot: " + response.data.Plot;
